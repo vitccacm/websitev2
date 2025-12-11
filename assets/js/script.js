@@ -39,6 +39,33 @@
 
         lastScrollY = currentScrollY;
     });
+
+    // Mobile Hamburger Injection
+    const toggleBtn = document.createElement('div');
+    toggleBtn.className = 'navbar-toggle';
+    toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    // Insert after logo, before menu (technically standard flex order handles this if justify-between)
+    // Actually append to navbar.
+    navbar.appendChild(toggleBtn);
+
+    const menu = navbar.querySelector('.navbar-menu');
+    if (toggleBtn && menu) {
+        toggleBtn.addEventListener('click', () => {
+            menu.classList.toggle('active');
+            toggleBtn.innerHTML = menu.classList.contains('active')
+                ? '<i class="fas fa-times"></i>'
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close menu when clicking a link
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+                toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    }
+
 })();
 
 // Lightbox Logic
